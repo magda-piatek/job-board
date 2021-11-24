@@ -1,0 +1,5 @@
+$root-font-size: 16; // the default font-size in browser
+
+@function toRem($size) {
+  @return $size / $root-font-size * 1rem;
+}

@@ -1,0 +1,14 @@
+@import "~mixins";
+@import "~colors";
+
+.button {
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  color: $primaryWhite;
+  background-color: $pprimaryButton;
+  font-size: toRem(15);
+  line-height: toRem(20);
+  border-radius: toRem(8);
+  padding: toRem(10) 0;
+}
