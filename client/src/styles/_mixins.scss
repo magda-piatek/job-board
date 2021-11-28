@@ -3,3 +3,35 @@ $root-font-size: 16; // the default font-size in browser
 @function toRem($size) {
   @return $size / $root-font-size * 1rem;
 }
+
+$i: 0;
+@while $i <= 30 {
+  .mt-#{$i} {
+    margin-top: toRem($i);
+  }
+  .mb-#{$i} {
+    margin-bottom: toRem($i);
+  }
+  .ml-#{$i} {
+    margin-left: toRem($i);
+  }
+  .mr-#{$i} {
+    margin-right: toRem($i);
+  }
+  .pt-#{$i} {
+    padding-top: toRem($i);
+  }
+  .pb-#{$i} {
+    padding-bottom: toRem($i);
+  }
+  .pl-#{$i} {
+    padding-left: toRem($i);
+  }
+  .pr-#{$i} {
+    padding-right: toRem($i) !important;
+  }
+  .fs-#{$i} {
+    font-size: toRem($i);
+  }
+  $i: $i + 1;
+}

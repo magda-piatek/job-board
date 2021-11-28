@@ -10,16 +10,18 @@ export function useFetchHook() {
     status,
     error: localError,
     handleRequested: useCallback(() => setStatus(RequestStatus.REQUESTED), []),
-    handleSuccess: useCallback(() => setStatus(RequestStatus.SUCCEEDED), []),
+    handleSuccess: useCallback(() => {
+      setStatus(RequestStatus.SUCCEEDED);
+      if (localError) setLocalError("");
+    }, [localError]),
     handleFail: useCallback((error: Record<string, any>) => {
       setStatus(RequestStatus.FAILED);
-
       setLocalError(error?.response?.data?.errors || error);
     }, []),
 
     handleReset: useCallback(() => {
       setStatus(RequestStatus.INITIAL);
-      setLocalError("");
     }, []),
+    setLocalError,
   } as const;
 }

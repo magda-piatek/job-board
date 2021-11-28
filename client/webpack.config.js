@@ -23,6 +23,7 @@ module.exports = () => {
       alias: {
         "~mixins": path.resolve(__dirname, "src/styles/_mixins.scss"),
         "~colors": path.resolve(__dirname, "src/styles/_colors.scss"),
+        "~basics": path.resolve(__dirname, "src/styles/_basics.scss"),
         "@": path.resolve(__dirname, "src"),
       },
     },

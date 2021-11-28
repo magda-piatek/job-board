@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Container, Row, Col } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
 
 import LoginRegisterForm from "../components/login-register-form/login-register-form";
 import registerSchema from "../../../validation/register";
@@ -9,11 +8,10 @@ import { usePost } from "../hooks/usePost";
 import { postRegister } from "../api/register-requests";
 import { TAuthRegisterReq } from "../../../types/auth";
 import { TUser } from "../../../types/user";
-import config from "../config";
 
 const RegisterPage = () => {
-  const history = useHistory();
-  const { postData } = usePost<TUser, TAuthRegisterReq>(postRegister);
+  const { postData, error } = usePost<TUser, TAuthRegisterReq>(postRegister);
+  const [successMsg, setSuccessMsg] = useState("");
 
   const initialValues = {
     email: "",
@@ -21,21 +19,33 @@ const RegisterPage = () => {
     confirm_password: "",
   };
 
-  const onSubmit = async (values: TAuthRegisterReq) => {
+  const onSubmit = async (
+    values: TAuthRegisterReq,
+    { resetForm }: { resetForm: () => void }
+  ) => {
+    if (successMsg) setSuccessMsg("");
     const result = await postData(values);
 
-    if (result) history.push(config.general.login.path());
+    if (result) {
+      resetForm();
+      setSuccessMsg(
+        "Confirmation link was sent to your email. Please accept it."
+      );
+    }
   };
 
   return (
     <Container>
       <Row>
         <Col md={{ span: 6, offset: 6 }}>
+          {successMsg}
+
           <LoginRegisterForm<TAuthRegisterReq>
             submitText="Register"
             schema={registerSchema}
             handleSubmit={onSubmit}
             initialValues={initialValues}
+            authError={error[0]?.authError}
           />
         </Col>
       </Row>

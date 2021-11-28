@@ -1,23 +1,24 @@
-import { Response } from "express";
-import express from "express";
+import express, { Response, Request } from "express";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
 
-import auth from "../../middleware/auth";
-import User from "../../models/user";
 import keys from "../../config/keys";
-import { IRequest } from "../../interfaces/request";
-import { TAuthLoginReq } from "../../../types/auth";
-import { TUser } from "../../../types/user";
-import loginSchema from "../../../validation/login";
-import validateObjectMW from "../../middleware/validation";
 
-const jwtSecret = keys.jwtSecret;
+import passport from "passport";
+import { TUser } from "../../../types/user";
+import User from "../../models/User";
+import checkIfAuth from "../../middleware/auth";
+
+const JWT_SECRET = keys.JWT_SECRET;
 const router = express.Router();
 
-router.get("/", auth, async (req: IRequest<TUser>, res: Response) => {
+export interface IRequestUser extends Request {
+  user: TUser;
+}
+
+router.get("/user", checkIfAuth, async (req: IRequestUser, res: Response) => {
   try {
-    const user = await User.findById(req.body.id).select("-password");
+    const user = await User.findById(req.user.id).select("-password");
+
     res.json(user);
   } catch (err) {
     console.log(err);
@@ -25,51 +26,82 @@ router.get("/", auth, async (req: IRequest<TUser>, res: Response) => {
   }
 });
 
-router.post(
-  "/",
-  validateObjectMW(loginSchema),
-  async (req: IRequest<TAuthLoginReq>, res: Response) => {
-    const { email, password } = req.body;
-    try {
-      const user = (await User.findOne({ email })) as TUser;
+// Send our user to Facebook to authenticate
+router.get(
+  "/facebook",
+  passport.authenticate("facebook", {
+    scope: ["email"],
+  })
+);
 
-      if (user && !user.confirmed)
-        res.status(400).json({
-          errors: [{ authError: "Please confirm your email to login" }],
-        });
+// Facebook sends our user back to our application here with token and profile information
+router.get(
+  "/facebook/callback",
+  passport.authenticate("facebook"),
+  (req, res) => {
+    const payload = {
+      user: {
+        id: (req.user as TUser).id,
+      },
+    };
 
-      if (!user)
-        res.status(400).json({ errors: [{ authError: "User doesn't exist" }] });
-
-      const isMatch = await bcrypt.compare(password, user.password);
-
-      if (!isMatch) {
-        res.status(400).json({
-          errors: [{ param: "invalid", authError: "Invalid credentials" }],
-        });
+    jwt.sign(
+      payload,
+      JWT_SECRET,
+      {
+        expiresIn: "1d",
+      },
+      (err, token) => {
+        if (err) throw err;
+        res.cookie("AUTH", token, { httpOnly: false });
+        res.redirect("/");
       }
-      const payload = {
-        user: {
-          id: user.id,
-        },
-      };
+    );
+  }
+);
+
+router.get("/logout", (req, res) => {
+  req.logout();
+  res.cookie("AUTH", "", { expires: new Date(0), httpOnly: false });
+  res.status(200).json("User Logged out");
+});
+
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", { session: false }, (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (info)
+      return res.status(400).json({
+        errors: [{ authError: info.message }],
+      });
+
+    const payload = {
+      user: {
+        id: user.id,
+      },
+    };
+
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(err);
+      }
 
       jwt.sign(
         payload,
-        jwtSecret,
+        JWT_SECRET,
         {
           expiresIn: "1d",
         },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          res.cookie("AUTH", token, { httpOnly: false });
+
+          return res.status(200).json({ token });
         }
       );
-    } catch (err) {
-      console.log(err.message);
-      res.status(500).send("Server error");
-    }
-  }
-);
+    });
+  })(req, res, next);
+});
 
 export default router;

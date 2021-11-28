@@ -2,14 +2,12 @@ import { model, Schema, models } from "mongoose";
 import { TUser } from "../../types/user";
 
 const UserSchema = new Schema({
-  // firstName: {
-  //   type: String,
-  //   required: true,
-  // },
-  // lastName: {
-  //   type: String,
-  //   required: true,
-  // },
+  firstName: {
+    type: String,
+  },
+  lastName: {
+    type: String,
+  },
   email: {
     type: String,
     required: true,
@@ -17,7 +15,6 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
   },
   date: {
     type: Date,
@@ -27,9 +24,9 @@ const UserSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  // avatar: {
-  //   type: Object,
-  // },
+  facebookId: {
+    type: String,
+  },
 });
 
 export default models.User || model<TUser>("User", UserSchema);

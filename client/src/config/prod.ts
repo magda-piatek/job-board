@@ -1,15 +1,6 @@
-export const keysProd: {
-  BASE_URL: string | undefined;
-  //   url: string;
-  //   user: string;
-  //   pass: string;
-  //   secret: string;
-  //   jwtSecret: string;
-} = {
+import { TKeys } from "./typedef";
+
+export const keysProd: TKeys = {
   BASE_URL: process.env.BASE_URL,
-  //   url: process.env.URL,
-  //   user: process.env.USER,
-  //   pass: process.env.PASS,
-  //   secret: process.env.SECRET,
-  //   jwtSecret: process.env.SECRETJWT,
+  API_URL: process.env.API_URL,
 };

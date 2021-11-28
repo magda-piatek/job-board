@@ -17,12 +17,12 @@ const transporter = nodemailer.createTransport({
 
 export default (to: string, emailToken: string) => {
   const options = {
-    from: keys.user,
+    from: keys.EMAIL,
     to: to,
     subject: "Confirm",
     template: "confirm-email",
     context: {
-      link: `${keys.url}/confirmation/${emailToken}`,
+      link: `${keys.URL}/confirmation/${emailToken}`,
     },
   };
 

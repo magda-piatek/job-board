@@ -6,8 +6,9 @@ import Button from "../button/button";
 type TProps<T> = {
   submitText: string;
   schema: any;
-  handleSubmit: (data: T) => void;
+  handleSubmit: (data: T, { resetForm }: { resetForm: () => void }) => void;
   initialValues: T;
+  authError: string;
 };
 
 const LoginRegisterForm = <T extends Record<string, any>>({
@@ -15,6 +16,7 @@ const LoginRegisterForm = <T extends Record<string, any>>({
   schema,
   handleSubmit,
   initialValues,
+  authError,
 }: TProps<T>) => {
   return (
     <Formik
@@ -80,7 +82,13 @@ const LoginRegisterForm = <T extends Record<string, any>>({
               </Form.Control.Feedback>
             </Form.Group>
           )}
-          <Button title={submitText} type="submit" />
+          {authError}
+          <Button title={submitText} type="submit" className="full-width" />
+          <div className="mt-30">
+            <a href="/api/auth/facebook">
+              <i className="bi bi-facebook"></i>
+            </a>
+          </div>
         </Form>
       )}
     </Formik>

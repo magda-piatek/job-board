@@ -11,7 +11,7 @@ router.get("/:token", async (req: Request, res: Response) => {
   try {
     const {
       user: { id },
-    }: any = jwt.verify(req.params.token, keys.jwtSecret);
+    }: any = jwt.verify(req.params.token, keys.JWT_SECRET);
 
     const user = await User.findOne({ id });
     if (user.confirmed) {

@@ -1,6 +1,8 @@
 import React from "react";
+import { Redirect, Route } from "react-router-dom";
+import config from "../config";
 
-import { Route } from "react-router-dom";
+import { isAuth } from "../utils/auth";
 
 type TProps = {
   component: React.ComponentType<any>;
@@ -11,4 +13,19 @@ type TProps = {
 export const PrivateRoute: React.FC<TProps> = ({
   component: Component,
   ...restProps
-}) => <Route {...restProps} render={(props) => <Component {...props} />} />;
+}) => (
+  <Route
+    {...restProps}
+    render={(props) =>
+      isAuth() ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{
+            pathname: config.general.login.path(),
+          }}
+        />
+      )
+    }
+  />
+);

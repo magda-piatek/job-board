@@ -1,10 +1,8 @@
-import { NextFunction, Response } from "express";
+import { NextFunction, Response, Request } from "express";
 
-const validateResourceMW =
-  (resourceSchema: any) =>
-  async (req: any, res: Response, next: NextFunction) => {
+export default (resourceSchema: any) =>
+  async (req: Request, res: Response, next: NextFunction) => {
     const resource = req.body;
-    console.log({ req });
 
     try {
       await resourceSchema.validate(resource, { abortEarly: false });
@@ -21,5 +19,3 @@ const validateResourceMW =
       res.status(400).json({ error: validationErrors });
     }
   };
-
-export default validateResourceMW;

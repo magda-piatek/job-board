@@ -3,7 +3,7 @@ import keys from "./keys";
 
 export default async () => {
   try {
-    await mongoose.connect(keys.mongoURI, {
+    await mongoose.connect(keys.MONGO_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     } as ConnectOptions);

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 import Header from "../header/header";
 
-type TProps = { children: any };
+type TProps = { children: ReactNode[] };
 
 const AppShell = ({ children }: TProps) => {
   return (

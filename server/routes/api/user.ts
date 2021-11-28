@@ -24,7 +24,9 @@ router.post(
       let user = await User.findOne({ email });
 
       if (user)
-        res.status(400).json({ errors: [{ msg: "User already exists" }] });
+        res
+          .status(400)
+          .json({ errors: [{ authError: "User already exists" }] });
 
       user = new User({ email, password });
       const salt = await bcrypt.genSalt(10);
@@ -34,7 +36,7 @@ router.post(
 
       jwt.sign(
         { user: user.id },
-        keys.jwtSecret,
+        keys.JWT_SECRET,
         {
           expiresIn: "1d",
         },

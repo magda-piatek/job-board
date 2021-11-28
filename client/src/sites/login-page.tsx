@@ -8,24 +8,27 @@ import loginSchema from "../../../validation/login";
 import { usePost } from "../hooks/usePost";
 import { TAuthLoginReq } from "../../../types/auth";
 import config from "../config";
-import { postLogin } from "../api/login-requests";
+import { login } from "../api/auth-requests";
 
 const LoginPage = () => {
   const history = useHistory();
-  const { postData } = usePost<{ token: string }, TAuthLoginReq>(postLogin);
+  const { postData, error } = usePost<{ token: string }, TAuthLoginReq>(login);
 
   const initialValues = {
     email: "",
     password: "",
   };
 
-  const onSubmit = async (values: TAuthLoginReq) => {
+  const onSubmit = async (
+    values: TAuthLoginReq,
+    { resetForm }: { resetForm: () => void }
+  ) => {
     const {
       data: { token },
     } = await postData(values);
 
     if (token) {
-      localStorage.setItem("token", token);
+      resetForm();
       history.push(config.general.home.path());
     }
   };
@@ -39,6 +42,7 @@ const LoginPage = () => {
             schema={loginSchema}
             handleSubmit={onSubmit}
             initialValues={initialValues}
+            authError={error[0]?.authError}
           />
         </Col>
       </Row>

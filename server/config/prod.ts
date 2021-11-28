@@ -1,15 +1,11 @@
-export const keysProd: {
-  mongoURI: string | undefined;
-  //   url: string;
-  //   user: string;
-  //   pass: string;
-  //   secret: string;
-  jwtSecret: string;
-} = {
-  mongoURI: process.env.MONGO_URI,
-  //   url: process.env.URL,
-  //   user: process.env.USER,
-  //   pass: process.env.PASS,
-  //   secret: process.env.SECRET,
-  jwtSecret: process.env.SECRETJWT,
+import { TKeys } from "./typedef";
+
+export const keysProd: TKeys = {
+  MONGO_URL: process.env.MONGO_URI,
+  URL: process.env.URL,
+  CLIENT_ID_FB: process.env.CLIENT_ID_FB,
+  CLIENT_SECRET_FB: process.env.CLIENT_SECRET_FB,
+  JWT_SECRET: process.env.JWT_SECRET,
+  COOKIE_KEY: process.env.COOKIE_KEY,
+  EMAIL: process.env.EMAIL,
 };
