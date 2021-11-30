@@ -1,5 +1,7 @@
 import { Strategy as FacebookStrategy } from "passport-facebook";
 import { Strategy as LocalStrategy } from "passport-local";
+import { OAuth2Strategy as GoogleStrategy } from "passport-google-oauth";
+
 import bcrypt from "bcryptjs";
 import passport from "passport";
 
@@ -51,7 +53,6 @@ passport.use(
       clientID: keys.CLIENT_ID_FB,
       clientSecret: keys.CLIENT_SECRET_FB,
       callbackURL: "/api/auth/facebook/callback",
-
       profileFields: ["email", "first_name", "last_name"],
     },
     (_, __, profile, done) => {
@@ -62,6 +63,34 @@ passport.use(
         } else {
           new User({
             facebookId: profile.id,
+            firstName: profile._json.first_name,
+            lastName: profile._json.last_name,
+            email: profile._json.email,
+            confirmed: true,
+          })
+            .save()
+            .then((user: TUser) => done(null, { user }));
+        }
+      });
+    }
+  )
+);
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: keys.CLIENT_ID_GOOGLE,
+      clientSecret: keys.CLIENT_SECRET_GOOGLE,
+      callbackURL: "/api/auth/google/callback",
+    },
+    (_, __, profile, done) => {
+      User.findOne({ googleId: profile.id }).then((existingUser) => {
+        if (existingUser) {
+          //passed to serializeUser
+          done(null, existingUser);
+        } else {
+          new User({
+            googleId: profile.id,
             firstName: profile._json.first_name,
             lastName: profile._json.last_name,
             email: profile._json.email,

@@ -27,6 +27,9 @@ const UserSchema = new Schema({
   facebookId: {
     type: String,
   },
+  googleId: {
+    type: String,
+  },
 });
 
 export default models.User || model<TUser>("User", UserSchema);

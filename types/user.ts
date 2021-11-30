@@ -8,4 +8,5 @@ export type TUser = {
   image: object;
   id: string;
   facebookId: string;
+  googleId: string;
 };

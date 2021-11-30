@@ -60,6 +60,34 @@ router.get(
   }
 );
 
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+router.get("/google/callback", passport.authenticate("google"), (req, res) => {
+  console.log("hh");
+
+  const payload = {
+    user: {
+      id: (req.user as TUser).id,
+    },
+  };
+
+  jwt.sign(
+    payload,
+    JWT_SECRET,
+    {
+      expiresIn: "1d",
+    },
+    (err, token) => {
+      if (err) throw err;
+      res.cookie("AUTH", token, { httpOnly: false });
+      res.redirect("/");
+    }
+  );
+});
+
 router.get("/logout", (req, res) => {
   req.logout();
   res.cookie("AUTH", "", { expires: new Date(0), httpOnly: false });

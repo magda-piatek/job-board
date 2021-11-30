@@ -88,6 +88,9 @@ const LoginRegisterForm = <T extends Record<string, any>>({
             <a href="/api/auth/facebook">
               <i className="bi bi-facebook"></i>
             </a>
+            <a href="/api/auth/google">
+              <i className="bi bi-google"></i>
+            </a>
           </div>
         </Form>
       )}
