@@ -54,7 +54,7 @@ router.get(
       (err, token) => {
         if (err) throw err;
         res.cookie("AUTH", token, { httpOnly: false });
-        res.redirect("/");
+        res.redirect(keys.URL);
       }
     );
   }
@@ -66,8 +66,6 @@ router.get(
 );
 
 router.get("/google/callback", passport.authenticate("google"), (req, res) => {
-  console.log("hh");
-
   const payload = {
     user: {
       id: (req.user as TUser).id,
@@ -83,7 +81,7 @@ router.get("/google/callback", passport.authenticate("google"), (req, res) => {
     (err, token) => {
       if (err) throw err;
       res.cookie("AUTH", token, { httpOnly: false });
-      res.redirect("/");
+      res.redirect(keys.URL);
     }
   );
 });

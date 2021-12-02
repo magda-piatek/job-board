@@ -1,5 +1,5 @@
 import config from "../config";
-import LoginPage from "../sites/login-page";
+import LoginPage from "../sites/login-page/login-page";
 import RegisterPage from "../sites/register-page";
 import Home from "../sites/home";
 
@@ -10,7 +10,6 @@ export const routes: Record<string, TRouteData> = {
     component: Home,
     props: {
       path: config.general.home.path(),
-      private: true,
     },
   },
 

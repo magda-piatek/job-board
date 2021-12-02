@@ -1,7 +1,9 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Formik } from "formik";
 import { Form } from "react-bootstrap";
 import Button from "../button/button";
+
+import "./login-register-form.scss";
 
 type TProps<T> = {
   submitText: string;
@@ -9,6 +11,7 @@ type TProps<T> = {
   handleSubmit: (data: T, { resetForm }: { resetForm: () => void }) => void;
   initialValues: T;
   authError: string;
+  children?: ReactNode;
 };
 
 const LoginRegisterForm = <T extends Record<string, any>>({
@@ -17,12 +20,14 @@ const LoginRegisterForm = <T extends Record<string, any>>({
   handleSubmit,
   initialValues,
   authError,
+  children,
 }: TProps<T>) => {
   return (
     <Formik
       validationSchema={schema}
       onSubmit={handleSubmit}
       initialValues={initialValues}
+      className="login-register-form"
     >
       {({
         handleSubmit,
@@ -84,12 +89,19 @@ const LoginRegisterForm = <T extends Record<string, any>>({
           )}
           {authError}
           <Button title={submitText} type="submit" className="full-width" />
-          <div className="mt-30">
-            <a href="/api/auth/facebook">
+          {children}
+          <div className="login-register-form__divider">
+            <span>or</span>
+          </div>
+
+          <div className="login-register-form__social">
+            <a href="/api/auth/facebook" className="facebook">
               <i className="bi bi-facebook"></i>
+              <span>Log In via Facebook</span>
             </a>
-            <a href="/api/auth/google">
+            <a href="/api/auth/google" className="google">
               <i className="bi bi-google"></i>
+              <span>Log In via Google</span>
             </a>
           </div>
         </Form>

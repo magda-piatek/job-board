@@ -37,9 +37,8 @@ const RegisterPage = () => {
   return (
     <Container>
       <Row>
-        <Col md={{ span: 6, offset: 6 }}>
+        <Col md={{ span: 5, offset: 7 }}>
           {successMsg}
-
           <LoginRegisterForm<TAuthRegisterReq>
             submitText="Register"
             schema={registerSchema}

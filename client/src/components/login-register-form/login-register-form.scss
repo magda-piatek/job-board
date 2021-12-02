@@ -1,0 +1,60 @@
+@import "~colors";
+@import "~mixins";
+
+.login-register-form {
+  &__divider {
+    width: 100%;
+    text-align: center;
+    border-bottom: toRem(1) solid $lightGrey;
+    line-height: 0.1em;
+    margin: toRem(30) 0;
+    span {
+      background: $primaryWhite;
+      padding: 0 toRem(10);
+      color: $primaryGrey;
+      font-size: toRem(12);
+    }
+  }
+  &__social {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .facebook {
+      border: toRem(1) solid $facebookColor;
+      color: $facebookColor;
+      &:hover,
+      &:focus {
+        background-color: $facebookColor;
+        color: $primaryWhite;
+      }
+    }
+
+    .google {
+      border: toRem(1) solid $googleColor;
+      color: $googleColor;
+      &:hover,
+      &:focus {
+        background-color: $googleColor;
+        color: $primaryWhite;
+      }
+    }
+
+    a {
+      text-decoration: none;
+      width: 48%;
+      display: inline-block;
+      font-weight: 800;
+      border-radius: toRem(8);
+      display: flex;
+      justify-content: center;
+      font-size: toRem(14);
+      padding: toRem(10);
+
+      i {
+        margin-right: toRem(4);
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}

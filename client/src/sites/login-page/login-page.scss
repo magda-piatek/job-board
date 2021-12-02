@@ -1,0 +1,12 @@
+@import "~colors";
+@import "~mixins";
+
+.sign-up-link {
+  text-align: center;
+  font-size: toRem(14);
+  margin-top: toRem(20);
+  color: $primaryGrey;
+  b {
+    cursor: pointer;
+  }
+}

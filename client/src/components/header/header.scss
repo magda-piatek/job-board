@@ -1,4 +1,5 @@
 @import "~mixins";
+@import "~colors";
 
 .nav-wrapper {
   padding: 15px 0;
@@ -13,13 +14,20 @@
       position: relative;
       text-align: center;
       white-space: nowrap;
-      color: #34a853;
-      background-color: #e1f2e5;
+      color: $darkGreen;
+      background-color: $primaryGreen;
       font-size: toRem(16);
       line-height: toRem(20);
       border-radius: toRem(8);
       font-weight: 400;
       font-size: toRem(14);
+      margin-right: toRem(6);
+      &.nav-link.active,
+      &:hover,
+      &:focus {
+        background-color: $darkGreen;
+        color: $primaryWhite;
+      }
     }
   }
 }

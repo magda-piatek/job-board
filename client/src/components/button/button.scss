@@ -1,13 +1,21 @@
 @import "~mixins";
 @import "~colors";
 
-.button {
+.btn.button {
   text-align: center;
   white-space: nowrap;
-  color: $primaryWhite;
-  background-color: $pprimaryButton;
+  color: $primaryGreen;
+  background-color: $primaryGreen;
+  border-color: $primaryGreen;
+  color: $darkGreen;
   font-size: toRem(15);
   line-height: toRem(20);
   border-radius: toRem(8);
-  padding: toRem(10) 0;
+  padding: toRem(12) 0;
+  &:hover,
+  &:focus {
+    background-color: $darkGreen;
+    color: $primaryWhite;
+    border-color: $darkGreen;
+  }
 }

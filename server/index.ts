@@ -44,8 +44,10 @@ app.use(
   })
 );
 
-app.use("*", (req: Request, res: Response) => {
+app.use("*", (req: Request, res: Response, next) => {
   res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Origin", keys.URL);
+  next();
 });
 
 //initialize passport
