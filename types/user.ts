@@ -9,4 +9,5 @@ export type TUser = {
   id: string;
   facebookId: string;
   googleId: string;
+  isCandidate: boolean;
 };

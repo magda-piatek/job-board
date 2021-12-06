@@ -4,5 +4,6 @@ export type TRouteData = {
     path: string;
     exact?: boolean;
     private?: boolean;
+    isCandidate?: boolean;
   };
 };

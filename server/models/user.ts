@@ -30,6 +30,10 @@ const UserSchema = new Schema({
   googleId: {
     type: String,
   },
+  isCandidate: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 export default models.User || model<TUser>("User", UserSchema);

@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useDispatch } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
@@ -11,8 +11,11 @@ import config from "../../config";
 import { login } from "../../api/auth-requests";
 
 import "./login-page.scss";
+import { getUser } from "../../redux/user/user-slice";
+
 const LoginPage = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const { postData, error } = usePost<{ token: string }, TAuthLoginReq>(login);
 
   const initialValues = {
@@ -30,7 +33,7 @@ const LoginPage = () => {
 
     if (token) {
       resetForm();
-      history.push(config.general.home.path());
+      dispatch(getUser());
     }
   };
 
@@ -47,9 +50,7 @@ const LoginPage = () => {
           >
             <div className="sign-up-link">
               Don't have an account?{" "}
-              <b onClick={() => history.push(config.general.register.path())}>
-                Signup
-              </b>
+              <b onClick={() => history.push(config.register.path())}>Signup</b>
             </div>
           </LoginRegisterForm>
         </Col>

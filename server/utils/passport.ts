@@ -26,7 +26,6 @@ passport.use(
     { usernameField: "email" },
     async (email, password, done) => {
       const user = await User.findOne({ email });
-      console.log(user);
       if (user === null)
         return done(null, false, { message: "User doesn't exist" });
       if (user.facebookId)
@@ -44,7 +43,6 @@ passport.use(
         });
 
       try {
-        console.log(password, user.password);
         if (await bcrypt.compare(password, user.password))
           return done(null, user);
 

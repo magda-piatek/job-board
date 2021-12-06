@@ -2,11 +2,13 @@ import React, { ReactNode } from "react";
 
 import Header from "../header/header";
 
-type TProps = { children: ReactNode[] };
+import "./app-shell.scss";
+
+type TProps = { children: ReactNode };
 
 const AppShell = ({ children }: TProps) => {
   return (
-    <div>
+    <div className="page-wrapper">
       <Header />
       {children}
     </div>

@@ -1,0 +1,9 @@
+@import "~mixins";
+
+.page-wrapper {
+  min-height: 100%;
+  background-color: #f5f7fc;
+  .container {
+    padding-top: toRem(80);
+  }
+}

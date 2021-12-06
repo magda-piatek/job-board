@@ -2,7 +2,10 @@
 @import "~colors";
 
 .nav-wrapper {
-  padding: 15px 0;
+  padding: toRem(15) 0;
+  background-color: $primaryWhite;
+  position: fixed;
+  width: 100%;
   .nav {
     position: relative;
     display: flex;
@@ -10,7 +13,7 @@
     align-items: center;
     padding: 0 toRem(60);
     margin: 0 auto;
-    .nav-link {
+    .nav-item:not(.dropdown) .nav-link {
       position: relative;
       text-align: center;
       white-space: nowrap;
@@ -28,6 +31,29 @@
         background-color: $darkGreen;
         color: $primaryWhite;
       }
+    }
+
+    .nav-item.dropdown .nav-link {
+      font-size: toRem(15);
+      display: flex;
+      align-items: center;
+      color: $darkGrey;
+      background-color: $primaryWhite;
+
+      &:hover,
+      &:focus {
+        background-color: $primaryWhite;
+        color: $darkGrey;
+      }
+      &:after {
+        margin-left: toRem(6);
+      }
+    }
+
+    .dropdown-item:hover,
+    .dropdown-item:focus {
+      background-color: $primaryWhite;
+      color: $darkGrey;
     }
   }
 }

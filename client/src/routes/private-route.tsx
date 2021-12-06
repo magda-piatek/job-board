@@ -22,7 +22,7 @@ export const PrivateRoute: React.FC<TProps> = ({
       ) : (
         <Redirect
           to={{
-            pathname: config.general.login.path(),
+            pathname: config.login.path(),
           }}
         />
       )

@@ -28,7 +28,7 @@ router.post(
           .status(400)
           .json({ errors: [{ authError: "User already exists" }] });
 
-      user = new User({ email, password });
+      user = new User({ email, password, isCandidate: true });
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
 
