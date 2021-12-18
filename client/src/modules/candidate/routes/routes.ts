@@ -8,6 +8,7 @@ export const routes: Record<string, TRouteData> = {
     component: Profile,
     props: {
       path: config.profile.path(),
+      exact: true,
     },
   },
 };

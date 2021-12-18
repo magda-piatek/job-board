@@ -30,9 +30,7 @@ export const useGenerateRoutes = () => {
 
       const routeProps = { component, path, exact };
       const RouteComponent = isRoutePrivate ? PrivateRouteComponent : Route;
-
       const isAvailable = isCandidate ? candidateRole : true;
-
       return isAvailable ? (
         <RouteComponent key={routeName} {...routeProps} />
       ) : null;

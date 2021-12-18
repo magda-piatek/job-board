@@ -1,15 +1,16 @@
 import React, { ReactNode } from "react";
 
 import Header from "../header/header";
+import { TNavLinks } from "../typedf";
 
 import "./app-shell.scss";
 
-type TProps = { children: ReactNode };
+type TProps = { children: ReactNode; moduleNavLinks?: TNavLinks };
 
-const AppShell = ({ children }: TProps) => {
+const AppShell = ({ children, moduleNavLinks }: TProps) => {
   return (
     <div className="page-wrapper">
-      <Header />
+      <Header moduleNavLinks={moduleNavLinks} />
       {children}
     </div>
   );

@@ -1,8 +1,4 @@
 const config = {
-  home: {
-    name: "Home",
-    path: () => "/",
-  },
   login: {
     name: "Login",
     path: () => "/login",
@@ -10,6 +6,14 @@ const config = {
   register: {
     name: "Register",
     path: () => "/register",
+  },
+  candidate: {
+    name: "Candidate",
+    path: () => "/candidate",
+  },
+  home: {
+    name: "Home",
+    path: () => "/",
   },
 };
 

@@ -1,8 +1,14 @@
-const config = {
+import config from "../../../config";
+
+const {
+  candidate: { path: candidatePath },
+} = config;
+
+const routesConfig = {
   profile: {
     name: "Profile",
-    path: () => "/profile",
+    path: () => `${candidatePath()}/profile`,
   },
 };
 
-export default config;
+export default routesConfig;

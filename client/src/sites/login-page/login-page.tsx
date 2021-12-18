@@ -34,6 +34,7 @@ const LoginPage = () => {
     if (token) {
       resetForm();
       dispatch(getUser());
+      history.push(config.candidate.path());
     }
   };
 

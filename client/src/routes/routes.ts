@@ -23,18 +23,20 @@ export const routes: Record<string, TRouteData> = {
     component: LoginPage,
     props: {
       path: config.login.path(),
+      exact: true,
     },
   },
   REGISTER: {
     component: RegisterPage,
     props: {
       path: config.register.path(),
+      exact: true,
     },
   },
   CANDIDATE: {
     component: CandidateModule,
     props: {
-      path: config.register.path(),
+      path: config.candidate.path(),
       isCandidate: true,
     },
   },
@@ -43,6 +45,7 @@ export const routes: Record<string, TRouteData> = {
     component: Home,
     props: {
       path: config.home.path(),
+      exact: true,
     },
   },
 };
