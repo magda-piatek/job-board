@@ -12,19 +12,7 @@ import { routes } from "./routes/routes";
 const CandidateResolver = () => {
   const { generateRoutes } = useGenerateRoutes();
 
-  const moduleNavLinks: TNavLinks = [
-    {
-      title: "Profile",
-      path: config.profile.path(),
-      isVisible: !!isAuth(),
-    },
-  ];
-
-  return (
-    <AppShell moduleNavLinks={moduleNavLinks}>
-      <Switch>{generateRoutes({ routes: routes })}</Switch>
-    </AppShell>
-  );
+  return <Switch>{generateRoutes({ routes: routes })}</Switch>;
 };
 
 export default CandidateResolver;

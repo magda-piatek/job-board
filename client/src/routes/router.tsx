@@ -11,9 +11,11 @@ export const Router = () => {
   const { generateRoutes } = useGenerateRoutes();
 
   return (
-    <Switch>
-      <AppShell>{generateRoutes({ routes: mainRoutes })}</AppShell>
-      {/* <Route path="*" component={NotFound} /> */}
-    </Switch>
+    <AppShell>
+      <Switch>
+        {generateRoutes({ routes: mainRoutes })}
+        {/* <Route path="*" component={NotFound} /> */}
+      </Switch>
+    </AppShell>
   );
 };

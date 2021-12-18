@@ -12,4 +12,5 @@ export const initialState: TUser = {
   facebookId: "",
   googleId: "",
   isCandidate: false,
+  module: "",
 };
