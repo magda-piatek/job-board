@@ -10,4 +10,6 @@ export const keysProd: TKeys = {
   JWT_SECRET: process.env.JWT_SECRET,
   COOKIE_KEY: process.env.COOKIE_KEY,
   EMAIL: process.env.EMAIL,
+  AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
+  AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
 };

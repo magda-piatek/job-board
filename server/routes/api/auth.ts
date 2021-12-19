@@ -17,7 +17,7 @@ export interface IRequestUser extends Request {
 
 router.get("/user", checkIfAuth, async (req: IRequestUser, res: Response) => {
   try {
-    const user = await User.findById(req.user.id).select("-password");
+    const user = await User.findById(req.user._id).select("-password");
 
     res.json(user);
   } catch (err) {
@@ -41,7 +41,7 @@ router.get(
   (req, res) => {
     const payload = {
       user: {
-        id: (req.user as TUser).id,
+        id: (req.user as TUser)._id,
       },
     };
 
@@ -68,7 +68,7 @@ router.get(
 router.get("/google/callback", passport.authenticate("google"), (req, res) => {
   const payload = {
     user: {
-      id: (req.user as TUser).id,
+      id: (req.user as TUser)._id,
     },
   };
 

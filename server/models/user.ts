@@ -32,7 +32,10 @@ const UserSchema = new Schema({
   },
   isCandidate: {
     type: Boolean,
-    default: false,
+    default: true,
+  },
+  avatar: {
+    type: Object,
   },
 });
 

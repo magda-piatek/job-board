@@ -4,12 +4,13 @@ import jwt from "jsonwebtoken";
 import { Response } from "express";
 
 import User from "../../models/User";
-import { TAuthRegisterReq } from "../../../types/auth";
+import { TAuthRegisterReq, TUserReq } from "../../../types/auth";
 import keys from "../../config/keys";
 import { IRequest } from "../../interfaces/request";
 import registerSchema from "../../../validation/register";
 import validateObjectMW from "../../middleware/validation";
 import sendEmail from "../../utils/send-email";
+import upload from "../../utils/upload-file";
 
 const router = express.Router();
 
@@ -46,6 +47,26 @@ router.post(
           }
         }
       );
+
+      res.json(user);
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).send("Server error");
+    }
+  }
+);
+
+router.patch(
+  "/:id",
+  upload.single("avatar"),
+  async (req: IRequest<TUserReq>, res: Response) => {
+    const avatar = req.file;
+    console.log(req.params);
+
+    try {
+      const user = await User.findOneAndUpdate((req.params as any).id, {
+        avatar,
+      });
 
       res.json(user);
     } catch (err) {
