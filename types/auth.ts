@@ -4,3 +4,7 @@ export type TAuthLoginReq = {
 };
 
 export type TAuthRegisterReq = TAuthLoginReq & { confirm_password: string };
+
+export type TUserReq = {
+  avatar?: object;
+};

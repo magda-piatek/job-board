@@ -5,9 +5,10 @@ export type TUser = {
   password: string;
   date: Date;
   confirmed: boolean;
-  image: object;
-  id: string;
+  avatar: object;
+  _id: string;
   facebookId: string;
   googleId: string;
   isCandidate: boolean;
+  module: string;
 };

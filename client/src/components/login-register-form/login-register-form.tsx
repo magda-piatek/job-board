@@ -1,5 +1,7 @@
 import React, { ReactNode } from "react";
 import { Formik } from "formik";
+import { SchemaOf } from "yup";
+
 import { Form } from "react-bootstrap";
 import Button from "../button/button";
 
@@ -7,7 +9,7 @@ import "./login-register-form.scss";
 
 type TProps<T> = {
   submitText: string;
-  schema: any;
+  schema: SchemaOf<T>;
   handleSubmit: (data: T, { resetForm }: { resetForm: () => void }) => void;
   initialValues: T;
   authError: string;

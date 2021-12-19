@@ -1,13 +1,17 @@
 import Cookies from "js-cookie";
 
 import keys from "../config/keys";
+import { THeaders } from "../typedf";
 
 const { BASE_URL, API_URL } = keys;
 
-export const getHeaders = () => ({
+export const getHeaders = (
+  passedHeader?: Record<string, string>
+): THeaders => ({
   withCredentials: true,
   headers: {
     Authorization: "Bearer " + Cookies.get("AUTH"),
+    ...passedHeader,
   },
 });
 
@@ -24,8 +28,9 @@ export const registerApi = () => {
   };
 };
 
-export const userApi = () => {
+export const userApi = (id?: string) => {
   return {
     get: BASE_URL + API_URL + "/auth/user",
+    patch: BASE_URL + API_URL + "/user/" + id,
   };
 };

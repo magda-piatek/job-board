@@ -8,7 +8,7 @@ export function usePost<T, U>(
 ): {
   readonly postData: (data: U) => Promise<AxiosResponse<T> | undefined>;
   readonly fetchStatus: RequestStatus;
-  readonly error: any;
+  readonly error: Record<string, any>;
 } {
   const {
     status,

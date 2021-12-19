@@ -1,53 +1,43 @@
 import { Formik } from "formik";
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
+import { useSelector } from "react-redux";
 import { Form } from "react-bootstrap";
 
+import { patchUser } from "../../api/user-requests";
+import Button from "../../components/button/button";
+import userSchema from "../../../../validation/user";
+import { TUserReq } from "../../../../types/auth";
+import { selectUserId } from "../../redux/user/user-selector";
+
 const Profile = () => {
+  const [avatar, setAvatar] = useState<string | Blob | undefined>();
+
+  const userId = useSelector(selectUserId);
+
+  const handleSubmit = async (values: TUserReq) => {
+    console.log(values);
+    const formData = new FormData();
+    if (avatar) formData.append("avatar", avatar as any);
+
+    await patchUser(formData, userId);
+  };
+
   return (
-    <Formik validationSchema={{}} onSubmit={console.log} initialValues={{}}>
-      {({
-        handleSubmit,
-        handleChange,
-        handleBlur,
-        values,
-        errors,
-        touched,
-      }) => (
+    <Formik
+      validationSchema={userSchema}
+      onSubmit={handleSubmit}
+      initialValues={{}}
+    >
+      {({ handleSubmit }) => (
         <Form noValidate onSubmit={handleSubmit}>
-          {/* <Form.Group className="mb-3">
-            <Form.Label>First Name</Form.Label>
-            <Form.Control
-              required
-              type="lastName"
-              name="firstName"
-              value={values.firstName}
-              onChange={handleChange}
-              isInvalid={touched.firstName && !!errors.firstName}
-              onBlur={handleBlur}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.firstName}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Last Name</Form.Label>
-            <Form.Control
-              required
-              type="lastName"
-              name="lastName"
-              value={values.lastName}
-              onChange={handleChange}
-              isInvalid={touched.lastName && !!errors.lastName}
-              onBlur={handleBlur}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.lastName}
-            </Form.Control.Feedback>
-          </Form.Group> */}
-          <Form.Group controlId="formFile" className="mb-3">
-            <Form.Label>Avatar</Form.Label>
-            <Form.Control type="file" />
-          </Form.Group>
+          <input
+            type="file"
+            name="avatar"
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setAvatar(event.target.files[0]);
+            }}
+          />
+          <Button type="submit" title="submit" />
         </Form>
       )}
     </Formik>
