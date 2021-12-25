@@ -30,13 +30,17 @@ const Profile = () => {
     >
       {({ handleSubmit }) => (
         <Form noValidate onSubmit={handleSubmit}>
-          <input
-            type="file"
-            name="avatar"
-            onChange={(event: ChangeEvent<HTMLInputElement>) => {
-              setAvatar(event.target.files[0]);
-            }}
-          />
+          <Form.Group className="mb-3">
+            <Form.Label>Avatar</Form.Label>
+
+            <Form.Control
+              type="file"
+              name="avatar"
+              onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                setAvatar(event.target.files[0]);
+              }}
+            />
+          </Form.Group>
           <Button type="submit" title="submit" />
         </Form>
       )}

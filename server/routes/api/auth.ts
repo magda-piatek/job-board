@@ -54,7 +54,7 @@ router.get(
       (err, token) => {
         if (err) throw err;
         res.cookie("AUTH", token, { httpOnly: false });
-        res.redirect(keys.URL);
+        res.redirect(keys.URL + "/success");
       }
     );
   }
@@ -81,7 +81,7 @@ router.get("/google/callback", passport.authenticate("google"), (req, res) => {
     (err, token) => {
       if (err) throw err;
       res.cookie("AUTH", token, { httpOnly: false });
-      res.redirect(keys.URL);
+      res.redirect(keys.URL + "/success");
     }
   );
 });
@@ -122,8 +122,7 @@ router.post("/login", (req, res, next) => {
         (err, token) => {
           if (err) throw err;
           res.cookie("AUTH", token, { httpOnly: false });
-
-          return res.status(200).json({ token });
+          res.status(200).json({ token });
         }
       );
     });

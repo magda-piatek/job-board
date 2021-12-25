@@ -41,10 +41,8 @@ export default (to: string, emailToken: string) => {
     (resolve: (msg: any) => void, reject: (err: Error) => void) => {
       transporter.sendMail(options, (error, info) => {
         if (error) {
-          console.log(`error: ${error}`);
           reject(error);
         } else {
-          console.log(`Message Sent ${info.response}`);
           resolve(`Message Sent ${info.response}`);
         }
       });

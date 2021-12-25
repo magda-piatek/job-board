@@ -1,5 +1,4 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
@@ -10,13 +9,12 @@ import { TAuthLoginReq } from "../../../../types/auth";
 import config from "../../config";
 import { login } from "../../api/auth-requests";
 
-import "./login-page.scss";
-import { getUser } from "../../redux/user/user-slice";
+import "./login.scss";
 
 const LoginPage = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
-  const { postData, error } = usePost<{ token: string }, TAuthLoginReq>(login);
+  const { postData: postLogin, error: loginError } =
+    usePost<{ token: string }, TAuthLoginReq>(login);
 
   const initialValues = {
     email: "",
@@ -29,12 +27,11 @@ const LoginPage = () => {
   ) => {
     const {
       data: { token },
-    } = await postData(values);
+    } = await postLogin(values);
 
     if (token) {
       resetForm();
-      dispatch(getUser());
-      history.push(config.candidate.path());
+      history.push(config.success.path());
     }
   };
 
@@ -47,7 +44,7 @@ const LoginPage = () => {
             schema={loginSchema}
             handleSubmit={onSubmit}
             initialValues={initialValues}
-            authError={error[0]?.authError}
+            authError={loginError[0]?.authError}
           >
             <div className="sign-up-link">
               Don't have an account?{" "}

@@ -3,9 +3,10 @@ import { lazy } from "react";
 import config from "../config";
 import withSuspense from "../components/with-suspense/with-suspense";
 
-import LoginPage from "../sites/login-page/login-page";
-import RegisterPage from "../sites/register-page";
+import LoginPage from "../sites/login/login";
+import RegisterPage from "../sites/register";
 import Home from "../sites/home";
+import Success from "../sites/success";
 
 import { TRouteData } from "./typedef";
 
@@ -45,6 +46,13 @@ export const routes: Record<string, TRouteData> = {
     component: Home,
     props: {
       path: config.home.path(),
+      exact: true,
+    },
+  },
+  SUCCESS: {
+    component: Success,
+    props: {
+      path: config.success.path(),
       exact: true,
     },
   },

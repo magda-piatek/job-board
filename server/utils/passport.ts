@@ -28,13 +28,9 @@ passport.use(
       const user = await User.findOne({ email });
       if (user === null)
         return done(null, false, { message: "User doesn't exist" });
-      if (user.facebookId)
+      if (user.facebookId || user.googleId)
         return done(null, false, {
-          message: "Facebook account already exists",
-        });
-      if (user.googleId)
-        return done(null, false, {
-          message: "Google account already exists",
+          message: "User with this email already exists",
         });
 
       if (user && !user.confirmed)
@@ -62,23 +58,37 @@ passport.use(
       callbackURL: "/api/auth/facebook/callback",
       profileFields: ["email", "first_name", "last_name"],
     },
-    (_, __, profile, done) => {
-      User.findOne({ facebookId: profile.id }).then((existingUser) => {
-        if (existingUser) {
-          //passed to serializeUser
-          done(null, existingUser);
+    async (_, __, profile, done) => {
+      const existingUser = await User.findOne({ facebookId: profile.id });
+      if (existingUser) {
+        //passed to serializeUser
+        done(null, existingUser);
+      } else {
+        const existingEmailUser = await User.findOne({
+          email: profile._json.email,
+        });
+        let newUser;
+        if (existingEmailUser) {
+          newUser = await User.findOneAndUpdate(existingEmailUser.id, {
+            facebookId: profile.id,
+          });
         } else {
-          new User({
+          newUser = await new User({
             facebookId: profile.id,
             firstName: profile._json.first_name,
             lastName: profile._json.last_name,
             email: profile._json.email,
             confirmed: true,
-          })
-            .save()
-            .then((user: TUser) => done(null, { user }));
+          });
         }
-      });
+
+        try {
+          await newUser.save();
+          done(null, newUser);
+        } catch (err) {
+          return done(err);
+        }
+      }
     }
   )
 );
@@ -90,23 +100,38 @@ passport.use(
       clientSecret: keys.CLIENT_SECRET_GOOGLE,
       callbackURL: "/api/auth/google/callback",
     },
-    (_, __, profile, done) => {
-      User.findOne({ googleId: profile.id }).then((existingUser) => {
-        if (existingUser) {
-          //passed to serializeUser
-          done(null, existingUser);
+    async (_, __, profile, done) => {
+      const existingUser = await User.findOne({ googleId: profile.id });
+
+      if (existingUser) {
+        //passed to serializeUser
+        done(null, existingUser);
+      } else {
+        const existingEmailUser = await User.findOne({
+          email: profile._json.email,
+        });
+        let newUser;
+        if (existingEmailUser) {
+          newUser = await User.findOneAndUpdate(existingEmailUser.id, {
+            googleId: profile.id,
+          });
         } else {
-          new User({
+          newUser = await new User({
             googleId: profile.id,
             firstName: profile._json.first_name,
             lastName: profile._json.last_name,
             email: profile._json.email,
             confirmed: true,
-          })
-            .save()
-            .then((user: TUser) => done(null, { user }));
+          });
         }
-      });
+
+        try {
+          await newUser.save();
+          done(null, newUser);
+        } catch (err) {
+          return done(err);
+        }
+      }
     }
   )
 );

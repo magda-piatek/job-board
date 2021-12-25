@@ -15,6 +15,10 @@ const config = {
     name: "Home",
     path: () => "/",
   },
+  success: {
+    name: "Success",
+    path: () => "/success",
+  },
 };
 
 export default config;

@@ -24,10 +24,12 @@ router.post(
     try {
       let user = await User.findOne({ email });
 
-      if (user)
+      if (user) {
         res
           .status(400)
           .json({ errors: [{ authError: "User already exists" }] });
+        return;
+      }
 
       user = new User({ email, password, isCandidate: true });
       const salt = await bcrypt.genSalt(10);
@@ -50,7 +52,6 @@ router.post(
 
       res.json(user);
     } catch (err) {
-      console.log(err.message);
       res.status(500).send("Server error");
     }
   }
@@ -61,7 +62,6 @@ router.patch(
   upload.single("avatar"),
   async (req: IRequest<TUserReq>, res: Response) => {
     const avatar = req.file;
-    console.log(req.params);
 
     try {
       const user = await User.findOneAndUpdate((req.params as any).id, {
@@ -70,7 +70,6 @@ router.patch(
 
       res.json(user);
     } catch (err) {
-      console.log(err.message);
       res.status(500).send("Server error");
     }
   }

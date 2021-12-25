@@ -11,6 +11,7 @@ import { TUser } from "../../../types/user";
 
 const RegisterPage = () => {
   const { postData, error } = usePost<TUser, TAuthRegisterReq>(postRegister);
+
   const [successMsg, setSuccessMsg] = useState("");
 
   const initialValues = {

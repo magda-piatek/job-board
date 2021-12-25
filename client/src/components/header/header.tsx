@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import { Container, Nav } from "react-bootstrap";
@@ -21,12 +21,15 @@ const Header = () => {
 
   const module = useSelector(selectModule);
 
+  const [, setRefresh] = useState(0);
+
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
     await logout();
     dispatch(setInitialStateUser());
     history.push(config.login.path());
+    setRefresh(Math.random());
   };
 
   const mainNavLinks: TNavLinks = [
