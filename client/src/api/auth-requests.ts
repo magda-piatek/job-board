@@ -7,3 +7,6 @@ export const login = async (data: TAuthLoginReq) =>
 
 export const logout = async () =>
   await axios.get(authApi().logout, { withCredentials: true });
+
+export const getToken = async () =>
+  await axios.get(authApi().getToken, { withCredentials: true });

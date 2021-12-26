@@ -19,6 +19,7 @@ export const authApi = () => {
   return {
     login: BASE_URL + API_URL + "/auth/login",
     logout: BASE_URL + API_URL + "/auth/logout",
+    getToken: BASE_URL + API_URL + "/auth/token",
   };
 };
 
@@ -32,5 +33,11 @@ export const userApi = (id?: string) => {
   return {
     get: BASE_URL + API_URL + "/auth/user",
     patch: BASE_URL + API_URL + "/user/" + id,
+  };
+};
+
+export const avatarApi = (key: string) => {
+  return {
+    get: BASE_URL + API_URL + "/avatar/" + key,
   };
 };

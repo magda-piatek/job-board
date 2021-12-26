@@ -26,6 +26,14 @@ router.get("/user", checkIfAuth, async (req: IRequestUser, res: Response) => {
   }
 });
 
+router.get("/token", checkIfAuth, async (req: IRequestUser, res: Response) => {
+  try {
+    res.json({ token: req.cookies.AUTH });
+  } catch (err) {
+    res.status(500).send("Server Error");
+  }
+});
+
 // Send our user to Facebook to authenticate
 router.get(
   "/facebook",

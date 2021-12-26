@@ -8,6 +8,7 @@ const routesConfig = {
   profile: {
     name: "Profile",
     path: () => `${candidatePath()}/profile`,
+    private: true,
   },
 };
 

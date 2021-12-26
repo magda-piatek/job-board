@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import { Container, Nav } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 import config from "../../config";
 import { isAuth } from "../../utils/auth";
-import { logout } from "../../api/auth-requests";
-import { setInitialStateUser } from "../../redux/user/user-slice";
+import { selectModule } from "../../redux/user/user-selector";
+import { Modules } from "../../typedf";
+import { useLogOut } from "../../hooks/use-log-out";
 
 import { TNavLinks } from "../typedf";
-import { selectModule } from "../../redux/user/user-selector";
-import { useDispatch, useSelector } from "react-redux";
+
 import navLinks from "./config";
-import { Modules } from "../../typedf";
 
 import "./header.scss";
 
@@ -23,12 +23,10 @@ const Header = () => {
 
   const [, setRefresh] = useState(0);
 
-  const dispatch = useDispatch();
+  const handleLogOut = useLogOut();
 
   const handleLogout = async () => {
-    await logout();
-    dispatch(setInitialStateUser());
-    history.push(config.login.path());
+    handleLogOut();
     setRefresh(Math.random());
   };
 

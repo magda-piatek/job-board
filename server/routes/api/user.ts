@@ -11,6 +11,7 @@ import registerSchema from "../../../validation/register";
 import validateObjectMW from "../../middleware/validation";
 import sendEmail from "../../utils/send-email";
 import upload from "../../utils/upload-file";
+import checkIfAuth from "../../middleware/auth";
 
 const router = express.Router();
 
@@ -59,6 +60,7 @@ router.post(
 
 router.patch(
   "/:id",
+  checkIfAuth,
   upload.single("avatar"),
   async (req: IRequest<TUserReq>, res: Response) => {
     const avatar = req.file;

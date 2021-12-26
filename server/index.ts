@@ -11,6 +11,7 @@ import connectDB from "./config/db";
 import auth from "./routes/api/auth";
 import user from "./routes/api/user";
 import confirmation from "./routes/api/confirmation";
+import avatar from "./routes/api/avatar";
 import keys from "./config/keys";
 
 require("./utils/passport");
@@ -57,6 +58,7 @@ app.use(express.static("client/dist"));
 
 app.use("/api/auth", auth);
 app.use("/api/user", user);
+app.use("/api/avatar", avatar);
 app.use("/confirmation", confirmation);
 
 app.get("*", (req: Request, res: Response) => {

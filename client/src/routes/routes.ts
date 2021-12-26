@@ -39,6 +39,7 @@ export const routes: Record<string, TRouteData> = {
     props: {
       path: config.candidate.path(),
       isCandidate: true,
+      private: true,
     },
   },
 
@@ -47,6 +48,7 @@ export const routes: Record<string, TRouteData> = {
     props: {
       path: config.home.path(),
       exact: true,
+      private: true,
     },
   },
   SUCCESS: {
@@ -54,6 +56,7 @@ export const routes: Record<string, TRouteData> = {
     props: {
       path: config.success.path(),
       exact: true,
+      private: true,
     },
   },
 };

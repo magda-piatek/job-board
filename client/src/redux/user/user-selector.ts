@@ -8,3 +8,5 @@ export const selectUser = (state: RootState) => state.user.user;
 export const selectModule = (state: RootState) => state.user.user.module;
 
 export const selectUserId = (state: RootState) => state.user.user._id;
+
+export const selectUserAvatar = (state: RootState) => state.user.user.avatar;
