@@ -1,7 +1,14 @@
 @import "~mixins";
 
 .profile-form {
+  display: flex;
+  justify-content: flex-end;
+  form {
+    width: 60%;
+  }
   img {
-    width: toRem(100);
+    width: toRem(200);
+    display: block;
+    margin-bottom: toRem(15);
   }
 }

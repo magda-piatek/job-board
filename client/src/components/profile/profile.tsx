@@ -7,7 +7,7 @@ import { patchUser } from "../../api/user-requests";
 import Button from "../../components/button/button";
 import userSchema from "../../../../validation/user";
 import { TUserReq } from "../../../../types/auth";
-import { selectUserAvatar, selectUserId } from "../../redux/user/user-selector";
+import { selectUser } from "../../redux/user/user-selector";
 import { getUser } from "../../redux/user/user-slice";
 import { fetchAvatar } from "../../api/avatar-requests";
 import { useFetchHook } from "../../hooks/useFetch";
@@ -22,13 +22,19 @@ const ProfileForm = () => {
   const { status, handleRequested, handleSuccess, handleFail } = useFetchHook();
 
   const dispatch = useDispatch();
-  const userId = useSelector(selectUserId);
-  const userAvatar = useSelector(selectUserAvatar);
+  const user = useSelector(selectUser);
+
+  const { firstName, lastName, avatar: userAvatar, _id: userId } = user;
 
   const handleSubmit = async (values: TUserReq) => {
     handleRequested();
     const formData = new FormData();
-    if (avatar) formData.append("avatar", avatar as any);
+
+    for (const key in values) {
+      formData.append(key, (values as any)[key]);
+    }
+
+    if (avatar) formData.append("avatar", avatar);
     try {
       await patchUser(formData, userId);
       dispatch(getUser());
@@ -54,21 +60,40 @@ const ProfileForm = () => {
       <Formik
         validationSchema={userSchema}
         onSubmit={handleSubmit}
-        initialValues={{}}
+        initialValues={{ firstName, lastName }}
       >
-        {({ handleSubmit }) => (
+        {({ handleSubmit, handleChange, values }) => (
           <Form noValidate onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
-              {avatarUrl && <img src={avatarUrl} alt="avatar" />}
-              <Form.Label>Avatar</Form.Label>
-
+              <Form.Label>First name</Form.Label>
               <Form.Control
-                type="file"
-                name="avatar"
-                onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                  setAvatar(event.target.files[0]);
-                }}
+                name="firstName"
+                type="text"
+                value={values.firstName}
+                onChange={handleChange}
               />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Last name</Form.Label>
+              <Form.Control
+                name="lastName"
+                type="text"
+                value={values.lastName}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Avatar</Form.Label>
+              <div>
+                {avatarUrl && <img src={avatarUrl} alt="avatar" />}
+                <Form.Control
+                  type="file"
+                  name="avatar"
+                  onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                    setAvatar(event.target.files[0]);
+                  }}
+                />
+              </div>
             </Form.Group>
             <Button
               type="submit"

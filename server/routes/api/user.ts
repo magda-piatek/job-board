@@ -67,6 +67,7 @@ router.patch(
 
     try {
       const user = await User.findOneAndUpdate((req.params as any).id, {
+        ...req.body,
         avatar,
       });
 

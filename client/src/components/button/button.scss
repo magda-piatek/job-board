@@ -18,4 +18,8 @@
     color: $primaryWhite;
     border-color: $darkGreen;
   }
+  &[type="submit"] {
+    min-width: toRem(100);
+    text-transform: uppercase;
+  }
 }
